@@ -22,7 +22,70 @@ const Content = () => {
   const [newReleases, setNewReleases] = useState([]);
   const [featuredPlaylists, setFeaturedPlaylists] = useState([]);
   const [recommendations, setRecommendations] = useState([]);
+  const [favorites, setFavorites] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+
+  const handleSaveToFavorites = async (imageURL,songTitle, artist, spotifyUrl) => {
+    const email = sessionStorage.getItem('email');
+
+    if (!email) {
+      console.error('User email not found in sessionStorage.');
+      return;
+    }
+    console.log('Logged-in user email:', email); // Log the email from sessionStorage
+
+    try {
+      const response = await fetch('http://localhost:8000/save-favorite', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          imageURL,
+          email,
+          songTitle,
+          artist,
+          spotifyUrl,
+        }),
+      });
+
+      const data = await response.json();
+      console.log(data); // Log the response from the backend
+    } catch (error) {
+      console.error('Error saving to favorites:', error);
+    }
+  }
+  const handleDeleteFavorites = async (image, title, subtitle, href) => {
+    const email = sessionStorage.getItem('email');
+  
+    if (!email) {
+      console.error('User email not found in sessionStorage.');
+      return;
+    }
+  
+    try {
+      const response = await fetch('http://localhost:8000/delete-favorite', {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email,
+          songTitle: title,
+          artist: subtitle,
+          spotifyUrl: href,
+          imageURL: image,
+        }),
+      });
+  
+      const data = await response.json();
+      console.log(data); // Log the response from the backend
+      // Update the favorites list in the frontend after successful deletion
+      fetchFavorites(); // Assuming fetchFavorites is a function to fetch updated favorites
+    } catch (error) {
+      console.error('Error deleting favorite:', error);
+    }
+  }
 
   const fetchNewReleases = async (TOKEN) => {
     try {
@@ -76,6 +139,23 @@ const Content = () => {
     }
   };
 
+  const fetchFavorites = async () => {
+    const email = sessionStorage.getItem('email');
+
+    if (!email) {
+      console.error('User email not found in sessionStorage.');
+      return;
+    }
+
+    try {
+      const response = await fetch(`http://localhost:8000/favorites?email=${email}`);
+      const data = await response.json();
+      setFavorites(data.favorites);
+    } catch (error) {
+      console.error('Error fetching favorite songs:', error);
+    }
+  };
+
   useEffect(() => {
     const TOKEN = extractTokenFromURI();
     if (TOKEN) {
@@ -83,6 +163,7 @@ const Content = () => {
       fetchNewReleases(TOKEN);
       fetchFeaturedPlaylists(TOKEN);
       fetchRecommendations(TOKEN, ["alternative", "samba"]); // Pass the genre seeds here
+      fetchFavorites();
     } else {
       window.open(getAuthorizeUrl(), "_self");
     }
@@ -96,19 +177,7 @@ const Content = () => {
     url += "&redirect_uri=" + encodeURIComponent(redirect_uri);
     return url;
   };
-  const handleSaveToFavorites = async () => {
-    try {
-      // Check if there's a token and user ID available
-      if (token) {
-        // Implement your logic to save the favorite song to the playlist
-        console.log('Song added to favorites!');
-      } else {
-        console.error('Token or user ID not available.');
-      }
-    } catch (error) {
-      console.error('Error saving to favorites:', error);
-    }
-  };
+
   const generateCard = (image, title, subtitle, href) => (
     <div className="card">
       <a href={href} target="_blank" rel="noopener noreferrer">
@@ -116,7 +185,9 @@ const Content = () => {
         <div className="title">{title}</div>
         <div className="subtitle">{subtitle}</div>
       </a>
-      <button className="button" onClick={handleSaveToFavorites}>Add to Favorites</button>
+      <button className='button' onClick={() => handleSaveToFavorites(image,title, subtitle, href)}>Add to Favorites</button>
+      <button className='button' onClick={() => handleDeleteFavorites(image,title, subtitle, href)}>Delete Favorites</button>
+
     </div>
   );
 
@@ -146,7 +217,6 @@ const Content = () => {
         </div>
       </section>
 
-      {/* Recommendations section */}
       <section id="recommendations">
         <h1 className="title">Recommendations</h1>
         <h3 className="subtitle">Your personalized recommendations on Spotify</h3>
@@ -160,6 +230,18 @@ const Content = () => {
           ) : (
             <p>No recommendations available</p>
           )}
+        </div>
+      </section>
+
+      <section id="favorites">
+        <h1 className="title">Favorites</h1>
+        <h3 className="subtitle">Your saved favorite songs</h3>
+        <div className="card-wrapper">
+          {favorites.map((favorite, index) => (
+            <React.Fragment key={index}>
+              {generateCard(favorite.imageURL,favorite.songTitle, favorite.artist, favorite.spotifyUrl)}
+            </React.Fragment>
+          ))}
         </div>
       </section>
     </main>

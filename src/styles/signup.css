@@ -39,16 +39,15 @@
   .purple_container {
     margin-top: 100px;
     margin-left: 300px;
-    background-color: lightblue;
+    background-color: #cec8ef;
     border-radius: 10px;
-    width: 500px;
-    height: 450px;
+    min-width: 240px;
+    height: 420px;
   }
   
   #title {
     font-size: 30px;
     margin-left: 80px;
-    padding-top: 20px;
   }
   
   #usernameContainer {
@@ -74,6 +73,7 @@
   input[type="text"],
   input[type="email"],
   input[type="password"] {
+    margin-left: 10px;
     width: 200px; /* Set the width */
     height: 10px; /* Set the height */
     padding: 8px; /* Add padding for better appearance */

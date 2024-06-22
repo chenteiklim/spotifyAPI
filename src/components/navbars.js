@@ -10,8 +10,7 @@ const Navbar = () => {
         <span className="mdi mdi-chevron-right mdi-36px"></span>
       </div>
       <div className="right">
-        <Link to="/signup" className="sign-up-btn">SIGN UP</Link> {/* Use Link instead of TouchableOpacity */}
-        <Link to="/login" className="login-btn">Login</Link> {/* Use Link instead of TouchableOpacity */}
+        <Link to="/" className="login-btn">Log Out</Link> {/* Use Link instead of TouchableOpacity */}
       </div>
     </nav>
   );

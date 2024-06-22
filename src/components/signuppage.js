@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios'; // Import Axios for making HTTP requests
+import { useNavigate } from 'react-router-dom';
 import '../styles/signup.css';
 
 const SignUpPage = () => {
@@ -8,6 +9,7 @@ const SignUpPage = () => {
     email: '',
     password: '',
   });
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -27,7 +29,10 @@ const SignUpPage = () => {
       if (error.response) {
         // The request was made and the server responded with a status code
         // that falls out of the range of 2xx
-        
+        if (!formData.email || !formData.password || formData.username) {
+          console.log('Please enter username, email and password');
+          return;
+        }
         if (error.response.status === 400) {
           console.log('Incorrect email format'); // Handle incorrect credentials error
         } else {
@@ -43,6 +48,9 @@ const SignUpPage = () => {
     }
   };
 
+  const handleLoginClick = () => {
+    navigate('/');
+  };
   return (
     <div id="container">
       <div id="moveContainer">
@@ -90,6 +98,8 @@ const SignUpPage = () => {
               />
             </div>
             <button id="signUpBtn" type="submit">Sign Up</button>
+            <button id="signUpBtn" onClick={handleLoginClick}>Login</button>
+
           </form>
         </div>
       </div>
