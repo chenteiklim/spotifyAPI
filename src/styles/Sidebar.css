@@ -1,0 +1,99 @@
+/* Sidebar.css */
+#sidebar {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    width: 248px;
+    height: 100%;
+    background: #000;
+    left: 0;
+    top: 0;
+    z-index: 10;
+  }
+  
+  .spotify {
+    display: flex;
+    align-items: center;
+    padding: 20px;
+    gap: 10px;
+  }
+  
+  .spotify-icon {
+    width: 50px;
+    border-radius: 99%;
+  }
+  
+  .spotify-text {
+    font-size: 24px;
+    color: white;
+  }
+  
+  .sidebar-items {
+    flex-grow: 1;
+    overflow-y: auto;
+  }
+  
+  .home, .search, .library, .playList, .love {
+    display: flex;
+    align-items: center;
+    padding: 10px 20px;
+  }
+  
+  .home-icon, .search-icon, .library-icon, .playList-icon, .love-icon {
+    width: 28px;
+  }
+  
+  .home-link, .search-link, .library-link, .playList-link, .love-link {
+    padding-left: 10px;
+    text-decoration: none;
+    color: #b3b3b3;
+    transition: color 0.5s ease;
+  }
+  
+  .home-link:hover, .search-link:hover, .library-link:hover, .playList-link:hover, .love-link:hover {
+    color: lightgreen;
+  }
+  
+  .footer {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .cookies, .privacy {
+    font-size: 12px;
+    color: #b3b3b3;
+    text-decoration: none;
+    padding-top: 10px;
+    transition: color 0.5s ease;
+  }
+  
+  .cookies:hover, .privacy:hover {
+    color: lightgreen;
+  }
+  
+  @media (max-width: 768px) {
+    #sidebar {
+      width: 200px;
+    }
+  
+    .spotify-icon {
+      width: 40px;
+    }
+  
+    .spotify-text {
+      font-size: 20px;
+    }
+  
+    .home-icon, .search-icon, .library-icon, .playList-icon, .love-icon {
+      width: 24px;
+    }
+  
+    .home-link, .search-link, .library-link, .playList-link, .love-link {
+      font-size: 14px;
+    }
+  
+    .footer {
+      margin-top: 200px;
+    }
+  }

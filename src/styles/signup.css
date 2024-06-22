@@ -1,0 +1,102 @@
+/* Define keyframes for the continuous leftward movement */
+@keyframes moveLeft {
+    from {
+      margin-left: 20px;
+    }
+    to {
+      margin-left: calc(45vw - 300px); /* Adjust this value for the desired endpoint */
+    }
+  }
+  
+  body {
+    display: flex;
+    font-size: 18px;
+    background-color: 	#301934;
+  }
+  
+  #moveContainer {
+    display: flex;
+    animation: moveLeft 0.5s ease forwards; /* Use the animation for leftward movement */
+  }
+  
+  #imageContainer {
+    width: 300px;
+    height: 420px;
+  }
+  
+  
+  #container {
+    margin-top: 20px;
+    width: 500px; /* Adjust width as needed */
+    height: 500px; /* Adjust height as needed */
+  }
+  
+  #fanime {
+    font-size: 60px;
+    color: purple;
+  }
+  
+  .purple_container {
+    margin-top: 100px;
+    margin-left: 300px;
+    background-color: lightblue;
+    border-radius: 10px;
+    width: 500px;
+    height: 450px;
+  }
+  
+  #title {
+    font-size: 30px;
+    margin-left: 80px;
+    padding-top: 20px;
+  }
+  
+  #usernameContainer {
+    padding-top: 20px;
+    padding-left: 20px;
+  }
+  
+  #emailContainer {
+    padding-top: 20px;
+    padding-left: 20px;
+  }
+  
+  #passwordContainer {
+    padding-top: 20px;
+    padding-left: 20px;
+  }
+  
+  #passwordContainer2 {
+    padding-top: 20px;
+    padding-left: 20px;
+  }
+  
+  input[type="text"],
+  input[type="email"],
+  input[type="password"] {
+    width: 200px; /* Set the width */
+    height: 10px; /* Set the height */
+    padding: 8px; /* Add padding for better appearance */
+    font-size: 16px; /* Adjust the font size */
+  }
+  
+  #show,
+  #show2 {
+    height: 27px;
+  }
+  
+  .errorMessage {
+    font-size: 14px;
+    padding-top: 15px;
+    padding-left: 15px;
+  }
+  
+  #signUpBtn {
+    height: 30px;
+    width: 200px;
+    margin-top: 30px;
+    margin-left: 20px;
+    background-color: #dbe9f4;
+    border: none;
+    cursor: pointer;
+  }
